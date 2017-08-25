@@ -1,0 +1,22 @@
+{% extends 'application.html' %}
+{% block container %}
+    <div class="title">
+        <h1>Tasks List</h1>
+        <a href="{% url 'app:create_list' %}" class="btn btn-success add-todolist">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </a>
+    </div>
+    <hr>
+    {% if to_do_list %}
+        <div class="list-group">
+            {% for list in to_do_list %}
+                <a href="{% url 'app:list_detail' list.id %}" class="list-group-item list-group-item-action">
+                    {{ list.title }}
+                    <span class="badge badge-default badge-pill">{{ list.to_do_count }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No To Do list are available.</p>
+    {% endif %}
+{% endblock container %}

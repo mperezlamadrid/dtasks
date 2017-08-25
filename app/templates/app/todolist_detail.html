@@ -1,0 +1,75 @@
+{% extends 'application.html' %}
+{% load static %}
+
+{% block extra_nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'app:update_list' todolist.id %}">> Edit List<span class="sr-only">(current)</span></a>
+</li>
+{% endblock extra_nav %}
+
+{% block container %}
+<div id="list-detail">
+    <div class="title">
+        <h1>{{ todolist.title }}</h1>
+        <div class="add-task pull-right">
+            <a href="{% url 'app:create_task' todolist.id %}" class="btn btn-primary add-todolist">
+                <i class="fa fa-tasks" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+    <hr>
+
+    {% if todolist.todo_set.all %}
+    <ul class="list-group">
+        {% for todo in todolist.todo_set.all|dictsortreversed:"created_at" %}
+            <li class="list-group-item justify-content-between">
+                <div class="title-task-item {% if todo.done %}check{% else %}uncheck{% endif %}">
+                    <span>{{ todo.title }}</span>
+                    <div class="delete-box">
+                        <form id="delete-task-form-{{ todo.id }}" action="{% url 'app:delete_task' todo.id %}" method="DELETE">{% csrf_token %} 
+                            <span class="delete-task-button" data-pk="{{ todo.id }}">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>                           
+                            </span>
+                        </form>
+                        <a class="edit-task" href="{% url 'app:update_task' todo.id %}" class="">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>                           
+                        </a>
+                    </div>
+                </div>
+                <div class="task-content">
+                    <div class="task-info pull-left">
+                        {% if todo.description %}
+                            <p>{{ todo.description }}</p>
+                        {% else %}
+                            <p>There is no description for this task, you should add one!</p>
+                        {% endif %}
+                    </div>
+                    <div class="task-checkbox pull-left">
+                        <form id="task-done-form-{{ todo.id }}" action="{% url 'app:task_done' todo.id %}" method="PUT">{% csrf_token %}
+                            <label>
+                                <input id="todo-{{ todo.id }}" type="checkbox" class="ios-switch green" {{ todo.done|yesno:"checked," }} />
+                                <div><div></div></div>
+                            </label>
+                            <!-- <label>
+                                <form id="task-done-form-{{ todo.id }}" action="{% url 'app:task_done' todo.id %}" method="PUT">{% csrf_token %}
+                                    <input id="todo-{{ todo.id }}" type="checkbox" {{ todo.done|yesno:"checked," }} />
+                                </form> 
+                            </label> -->
+                        </form>
+                    </div>
+                </div>
+                <div class="dates">
+                    <p class="pull-left">Created at: <strong>{{ todo.created_at|date:"d M Y"}}</strong></p>
+                    <p class="pull-right">Updated at: <strong>{{ todo.updated_at|date:"d M Y"}}</strong></p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <div class="blank-state">
+            <img src="{% static 'app/images/blank.png' %}" alt="Blank">
+            <p> There is not To-Do for this taks</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock container %}

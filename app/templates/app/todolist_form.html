@@ -1,0 +1,9 @@
+{% extends 'application.html' %}
+
+{% block container %}
+<form action="" method="post">{% csrf_token %}
+     {% include '_form.html' %} 
+    <!-- {{ form.as_p }} -->
+    <input class="btn btn-primary pull-right" type="submit" value="Create" />
+</form>  
+{% endblock container %}
