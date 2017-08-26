@@ -13,9 +13,11 @@
         Reports
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="nav-link" href="{% url 'app:update_list' todolist.id %}">Tasks completed this month<span class="sr-only">(current)</span></a>
-        <a class="nav-link" href="{% url 'app:update_list' todolist.id %}">Pending Tasks<span class="sr-only">(current)</span></a>
-        <a class="nav-link" href="{% url 'app:update_list' todolist.id %}">Pending Tasks for more than one month<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=all-completed-tasks">All Tasks completed this month<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=completed-tasks">Tasks completed this month<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=all-pending-tasks">All Pending Tasks<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=pending-tasks">Pending Tasks this month<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}">Show All Tasks<span class="sr-only">(current)</span></a>
     </div>
 </div>
 {% endblock reports %}
@@ -26,7 +28,7 @@
         <h1>{{ todolist.title }}</h1>
         <div class="add-task pull-right">
             <a href="{% url 'app:create_task' todolist.id %}" class="btn btn-primary add-todolist">
-                <i class="fa fa-tasks" aria-hidden="true"></i>
+                <i class="fa fa-plus" aria-hidden="true"></i>
             </a>
         </div>
     </div>
@@ -34,7 +36,7 @@
 
     {% if todolist.todo_set.all %}
     <ul class="list-group">
-        {% for todo in todolist.todo_set.all|dictsortreversed:"created_at" %}
+        {% for todo in tasks|dictsortreversed:"created_at" %}
             <li class="list-group-item justify-content-between">
                 <div class="title-task-item task-{{ todo.id }} {% if todo.done %}check{% else %}uncheck{% endif %}">
                     <span>{{ todo.title }}</span>

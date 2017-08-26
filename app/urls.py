@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^task/(?P<pk>[0-9]+)/edit$', views.ToDoUpdateView.as_view(), name='update_task'),
     url(r'^delete_task/(?P<pk>[0-9]+)/$', views.DeleteTask, name='delete_task'),
     url(r'^task_done/(?P<pk>[0-9]+)/$', views.TaskDone, name='task_done'),
+    # URLs for reports
+    url(r'^reports/(?P<pk>[0-9]+)/$', views.ToDoListReportsView, name='list_reports'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

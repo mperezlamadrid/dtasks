@@ -4,6 +4,7 @@ from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 from django.urls import reverse
 from django.utils import timezone
+import datetime
 import json
 
 from app.models import ToDoList, ToDo
@@ -23,6 +24,22 @@ class ToDoListCreateView(generic.CreateView):
 class ToDoListDetailView(generic.DetailView):
     model = ToDoList
 
+    def get_context_data(self, **kwargs):
+        this_month = datetime.datetime.now().month
+        context = super(ToDoListDetailView, self).get_context_data(**kwargs)
+        report = self.request.GET.get('report')
+        to_do_list = ToDoList.objects.get(pk=self.kwargs.get('pk'))
+        if report == "all-completed-tasks":
+            context["tasks"] = to_do_list.todo_set.filter(done=True)
+        elif report == "completed-tasks":
+            context["tasks"] = to_do_list.todo_set.filter(done=True, created_at__month=this_month)
+        elif report == "all-pending-tasks":
+            context["tasks"] = to_do_list.todo_set.filter(done=False)
+        elif report == "pending-tasks":
+            context["tasks"] = to_do_list.todo_set.filter(done=False, created_at__month=this_month)
+        else:
+            context["tasks"] = to_do_list.todo_set.all()
+        return context
 
 class ToDoCreateView(generic.CreateView):
     model = ToDo
@@ -72,3 +89,19 @@ def TaskDone(request, pk):
             return response
     else:
         return redirect(todo)
+
+
+def ToDoListReportsView(request, pk):
+    report = request.GET['report']
+    if report == "completed-task":
+        pass
+        #TODO buscar todas las tareas completadas en la lista
+    elif report == "pending-task":
+        pass
+        #TODO buscar todas las tareas pendientes en el mes
+    else:
+        pass
+        #TODO buscar todas las tareas pendientes en la lista
+
+    return None
+
