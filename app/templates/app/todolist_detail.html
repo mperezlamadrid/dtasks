@@ -65,8 +65,8 @@
                     </div>
                 </div>
                 <div class="dates">
-                    <p class="pull-left">Created at: <strong>{{ todo.created_at|date:"d M Y"}}</strong></p>
-                    <p class="pull-right">Updated at: <strong>{{ todo.updated_at|date:"d M Y"}}</strong></p>
+                    <p class="pull-left">Created at: <strong>{{ todo.created_at|date:"M d - Y h:i A" }}</strong></p>
+                    <p class="pull-right">Updated at: <strong>{{ todo.updated_at|date:"M d - Y h:i A" }}</strong></p>
                 </div>
             </li>
         {% endfor %}
