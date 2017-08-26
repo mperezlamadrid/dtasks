@@ -3,3 +3,4 @@ psycopg2==2.7.3
 python-dotenv
 django-widget-tweaks
 gunicorn
+python-dateutil

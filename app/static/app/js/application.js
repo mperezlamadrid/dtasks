@@ -46,6 +46,9 @@ $(document).ready( function() {
             }else{
                 $(".title-task-item.task-"+data['todo_id']).addClass('uncheck')
             }
+        }).fail(function(data){
+            $("#todo-"+id).prop('checked', true);
+            $('#error-modal').modal('show');
         });
     });
 

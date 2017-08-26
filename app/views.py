@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 from django.urls import reverse
+from django.utils import timezone
+import json
 
 from app.models import ToDoList, ToDo
 
@@ -55,12 +57,18 @@ def DeleteTask(request, pk):
         return redirect(todo)
 
 def TaskDone(request, pk):
-    if request.is_ajax():
-        """ Acutalizo el estado de la tarea """
+    """ Acutalizo el estado de la tarea """
+    if request.is_ajax():        
+        now = timezone.now()
         todo = ToDo.objects.get(pk=pk)
-        todo.done = not todo.done
-        todo.save()
-        data = {'updated':todo.done, 'todo_id': todo.id}
-        return JsonResponse(data)
+        diff = now - todo.created_at
+        if diff.days <= 30 or diff.days > 30 and not todo.done:
+            todo.done = not todo.done
+            todo.save()
+            data = {'updated':todo.done, 'todo_id': todo.id}
+            return JsonResponse(data)
+        else:
+            response = JsonResponse({'error': 'You can not mark this task as not finished'}, status=405)
+            return response
     else:
         return redirect(todo)
