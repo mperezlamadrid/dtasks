@@ -13,7 +13,7 @@
         Reports
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=all-completed-tasks">All Tasks completed this month<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=all-completed-tasks">All Tasks completed<span class="sr-only">(current)</span></a>
         <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=completed-tasks">Tasks completed this month<span class="sr-only">(current)</span></a>
         <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=all-pending-tasks">All Pending Tasks<span class="sr-only">(current)</span></a>
         <a class="nav-link" href="{% url 'app:list_detail' todolist.id %}?report=pending-tasks">Pending Tasks this month<span class="sr-only">(current)</span></a>
