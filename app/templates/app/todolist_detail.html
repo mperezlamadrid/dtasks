@@ -23,14 +23,12 @@
     <ul class="list-group">
         {% for todo in todolist.todo_set.all|dictsortreversed:"created_at" %}
             <li class="list-group-item justify-content-between">
-                <div class="title-task-item {% if todo.done %}check{% else %}uncheck{% endif %}">
+                <div class="title-task-item task-{{ todo.id }} {% if todo.done %}check{% else %}uncheck{% endif %}">
                     <span>{{ todo.title }}</span>
                     <div class="delete-box">
-                        <form id="delete-task-form-{{ todo.id }}" action="{% url 'app:delete_task' todo.id %}" method="DELETE">{% csrf_token %} 
-                            <span class="delete-task-button" data-pk="{{ todo.id }}">
-                                <i class="fa fa-trash-o" aria-hidden="true"></i>                           
-                            </span>
-                        </form>
+                        <span class="delete-task-button" data-pk="{{ todo.id }}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>                           
+                        </span>
                         <a class="edit-task" href="{% url 'app:update_task' todo.id %}" class="">
                             <i class="fa fa-pencil" aria-hidden="true"></i>                           
                         </a>
@@ -45,17 +43,10 @@
                         {% endif %}
                     </div>
                     <div class="task-checkbox pull-left">
-                        <form id="task-done-form-{{ todo.id }}" action="{% url 'app:task_done' todo.id %}" method="PUT">{% csrf_token %}
-                            <label>
-                                <input id="todo-{{ todo.id }}" type="checkbox" class="ios-switch green" {{ todo.done|yesno:"checked," }} />
-                                <div><div></div></div>
-                            </label>
-                            <!-- <label>
-                                <form id="task-done-form-{{ todo.id }}" action="{% url 'app:task_done' todo.id %}" method="PUT">{% csrf_token %}
-                                    <input id="todo-{{ todo.id }}" type="checkbox" {{ todo.done|yesno:"checked," }} />
-                                </form> 
-                            </label> -->
-                        </form>
+                        <label>
+                            <input id="todo-{{ todo.id }}" type="checkbox" class="ios-switch green" {{ todo.done|yesno:"checked," }} />
+                            <div><div></div></div>
+                        </label>
                     </div>
                 </div>
                 <div class="dates">

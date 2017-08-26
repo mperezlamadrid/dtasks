@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
@@ -45,14 +45,22 @@ class ToDoListUpdateView(generic.UpdateView):
     fields = ('title',)
 
 def DeleteTask(request, pk):
-    """ Elimino una tarea """
-    todo = ToDo.objects.get(pk=pk)
-    todo.delete()
-    return redirect(todo)
+    if request.is_ajax():
+        """ Elimino una tarea """
+        todo = ToDo.objects.get(pk=pk)
+        todo.delete()
+        data = {'deleted': True, 'todo_id': pk}
+        return JsonResponse(data)
+    else:
+        return redirect(todo)
 
 def TaskDone(request, pk):
-    """ Acutalizo el estado de la tarea """
-    todo = ToDo.objects.get(pk=pk)
-    todo.done = not todo.done
-    todo.save()
-    return redirect(todo)
+    if request.is_ajax():
+        """ Acutalizo el estado de la tarea """
+        todo = ToDo.objects.get(pk=pk)
+        todo.done = not todo.done
+        todo.save()
+        data = {'updated':todo.done, 'todo_id': todo.id}
+        return JsonResponse(data)
+    else:
+        return redirect(todo)
