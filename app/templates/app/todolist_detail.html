@@ -36,7 +36,7 @@
 
     {% if todolist.todo_set.all %}
     <ul class="list-group">
-        {% for todo in tasks|dictsortreversed:"created_at" %}
+        {% for todo in tasks|dictsort:"created_at" %}
             <li class="list-group-item justify-content-between">
                 <div class="title-task-item task-{{ todo.id }} {% if todo.done %}check{% else %}uncheck{% endif %}">
                     <span>{{ todo.title }}</span>
