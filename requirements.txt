@@ -4,3 +4,4 @@ python-dotenv
 django-widget-tweaks
 gunicorn
 python-dateutil
+whitenoise
