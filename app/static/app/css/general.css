@@ -187,6 +187,17 @@ button.btn-secondary, button.btn-secondary:hover, .show>.btn.btn-secondary.dropd
     cursor: pointer;
 }
 
+#cancelar{
+    color: #fff;
+    cursor: pointer;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+form input[type="submit"]{
+    cursor: pointer;
+}
+
 /* MEDIA QUERY */
 @media (max-width: 991px) {
     #reports-dropdown .dropdown-menu.show{

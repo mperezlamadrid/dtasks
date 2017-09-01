@@ -5,5 +5,6 @@
      {% include '_form.html' %} 
     <!-- {{ form.as_p }} -->
     <input class="btn btn-primary pull-right" type="submit" value="Create" />
+    <a id="cancelar" class="btn btn-warning" href="{% url 'app:index' %}" onClick="confirm('Are you sure?')">Cancelar</a>
 </form>  
 {% endblock container %}

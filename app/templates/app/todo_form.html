@@ -5,5 +5,6 @@
      {% include '_form.html' %} 
     <!-- {{ form.as_p }} -->
     <input class="btn btn-primary pull-right" type="submit" value="Sumbit" />
+    <a id="cancelar" class="btn btn-warning" href="" onClick="confirm('Are you sure?');window.history.back()">Cancelar</a>
 </form>  
 {% endblock container %}
