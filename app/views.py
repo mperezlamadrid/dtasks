@@ -90,18 +90,12 @@ def TaskDone(request, pk):
     else:
         return redirect(todo)
 
-
-def ToDoListReportsView(request, pk):
-    report = request.GET['report']
-    if report == "completed-task":
-        pass
-        #TODO buscar todas las tareas completadas en la lista
-    elif report == "pending-task":
-        pass
-        #TODO buscar todas las tareas pendientes en el mes
+def DeleteList(request, pk):
+    if request.is_ajax():
+        """ Elimino una Lista """
+        todolist = ToDoList.objects.get(pk=pk)
+        todolist.delete()
+        data = {'deleted': True, 'todolist_id': pk}
+        return JsonResponse(data)
     else:
-        pass
-        #TODO buscar todas las tareas pendientes en la lista
-
-    return None
-
+        return redirect(todolist)

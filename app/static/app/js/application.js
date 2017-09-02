@@ -68,4 +68,23 @@ $(document).ready( function() {
             return false;
         }
     });
+
+    $('.delete-list-button').click(function(e) {
+        e.preventDefault();
+
+        var check = confirm("Are you sure?");
+        list_box = $(this).closest('.delete-list').parent();     
+        if (check == true) {
+            id = $(this).data('pk')
+
+            $.ajax({
+                url: "/delete_list/"+id,
+                type: "DELETE"
+            }).done(function(data) {
+                list_box.remove();
+            });
+        }else {
+            return false;
+        }
+    });
 });

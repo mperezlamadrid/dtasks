@@ -12,6 +12,11 @@
             {% for list in to_do_list %}
                 <a href="{% url 'app:list_detail' list.id %}" class="list-group-item list-group-item-action">
                     {{ list.title }}
+                    <div class="delete-list pull-right">
+                        <span class="delete-list-button" data-pk="{{ list.id }}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>                           
+                        </span>
+                    </div>
                     <span class="badge badge-default badge-pill">{{ list.to_do_count }}</span>
                 </a>
             {% endfor %}
